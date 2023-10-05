@@ -1,0 +1,11 @@
+.t1{
+
+    margin: 0;
+    padding: 0;
+    background: url("https://i.pinimg.com/564x/86/d1/5c/86d15c9dbd27039978b9c87c4ccb4bc2.jpg");
+     /* Replace with your background image URL */
+    background-size:50%;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif; /* You can change the font-family as needed */
+}

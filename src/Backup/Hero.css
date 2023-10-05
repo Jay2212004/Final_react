@@ -1,0 +1,126 @@
+/* This is the custom CSS file for the home page */
+
+/* This is the style for the logo image */
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+/* This is the style for the hero section */
+.jumbotron {
+    background-image: url("D:\reactproject1\src\images\Background-image.jpg"); /* This is the background image */
+    background-size: contain; /* This makes the image cover the whole section */
+    background-position: center; /* This centers the image */
+    height: 80vh; /* This sets the height of the section to 80% of the viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+/* This is the style for the headline */
+.jumbotron h1 {
+    color:rgb(90, 85, 85); /* This sets the text color to white */
+    font-size: 4rem; /* This sets the font size to 4 rem */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* This adds a shadow effect to the text */
+}
+
+/* This is the style for the subheading */
+.jumbotron p {
+    color: white; /* This sets the text color to white */
+    font-size: 1.5rem; /* This sets the font size to 1.5 rem */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* This adds a shadow effect to the text */
+    margin-bottom: 20px; /* Add some space below the subheading */
+}
+.container{
+text-align: center;
+}
+/* This is the style for the call to action button */
+.jumbotron a.btn {
+    background-color: #ff9900; /* This sets the background color to orange */
+    border-color: #ff9900; /* This sets the border color to orange */
+    color: white; /* This sets the text color to white */
+    font-size: 1.25rem; /* This sets the font size to 1.25 rem */
+    padding: 10px 20px; /* Add some padding to the button */
+    transition: background-color 0.3s ease; /* Add a smooth transition to the background color */
+    text-decoration: none;
+}
+
+.jumbotron a.btn:hover {
+    background-color: #ff6600; /* Change the background color on hover */
+}
+
+/* This is the style for the section title */
+.container h2 {
+    margin-bottom: 20px; /* This adds some space below the title */
+    font-size: 2.5rem; /* Increase the font size for section titles */
+}
+
+/* This is the style for the section subtitle */
+.container p {
+    margin-bottom: 40px; /* This adds some space below the subtitle */
+    font-size: 1.25rem; /* Increase the font size for section subtitles */
+}
+
+/* These are some media queries for responsive design */
+
+/* For small devices and up */
+@media (min-width: 576px) {
+    .jumbotron h1 {
+        font-size: 5rem;
+    }
+
+    .jumbotron p {
+        font-size: 1.75rem;
+    }
+}
+
+/* For medium devices and up */
+@media (min-width: 768px) {
+    .jumbotron h1 {
+        font-size: 6rem;
+    }
+
+    .jumbotron p {
+        font-size: 2rem;
+    }
+}
+/* Styling for the "Our Services" section */
+
+/* Style for the service card container */
+.row {
+    margin-top: 40px; /* Add some space above the service cards */
+}
+
+/* Style for the service cards */
+.card {
+    border: none; /* Remove the default card border */
+    transition: transform 0.2s; /* Add a smooth transform transition on hover */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Move the card up slightly on hover */
+}
+
+.card-title {
+    font-size: 1.5rem; /* Increase the font size for service titles */
+    margin-top: 15px; /* Add some space above the service title */
+}
+
+.card-text {
+    font-size: 1rem; /* Increase the font size for service descriptions */
+    margin-bottom: 20px; /* Add some space below the service description */
+}
+
+/* Style for the "Learn More" buttons */
+.btn-outline-primary {
+    border-color: #007bff; /* Set the border color for the button */
+    color: #007bff; /* Set the text color for the button */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add a smooth transition for button hover */
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff; /* Change the background color on hover */
+    color: white; /* Change the text color on hover */
+}
