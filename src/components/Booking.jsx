@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './Booking.css';
+import jsPDF from 'jspdf';
+import { Link } from 'react-router-dom';
+import Preview from './Prereview';
 import {
   Container,
   Box,
@@ -18,9 +21,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { FormControlLabel, Radio as MuiRadio } from '@mui/material';
 
 const Booking = () => {
+  const[showPreview,setShowPreview]=useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
+    petsname:'',
     address: '',
     phoneNumber: '',
     grooming: false,
@@ -34,8 +39,9 @@ const Booking = () => {
     turtle:false,
     rabbit:false,
     feed:false,
-    gender: '',
-    dateOfBirth: new Date(),
+    gender:'female',
+    dateOfStart: new Date(),
+    dateOfEnd: new Date(),
     petType: '',
     specialRequirements: '',
   });
@@ -59,8 +65,13 @@ const Booking = () => {
   const radioGroupStyles = {
     marginBottom: '20px',
   };
+  const handleGenderChange = (value) => {
+    setFormData({
+      ...formData,
+      gender: value,
+    });
+  };
 
-  const [gender, setGender] = useState('female');
   const handlePhoneNumberChange = (e) => {
     const phoneNumber = e.target.value;
     const phoneRegex = /^\d{10}$/; // Change this pattern according to your requirements.
@@ -69,8 +80,7 @@ const Booking = () => {
   };
 
   const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log('Form submitted with data:', formData);
+setShowPreview(true);
   };
 
   return (    <div className='t1'><Container 
@@ -125,6 +135,22 @@ const Booking = () => {
             value={formData.lastName}
             onChange={handleInputChange}
           />
+         <Input
+  type="text"
+  name="petsName"
+  placeholder="Pet's Name"
+  style={{
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    padding: '10px',
+    width: '100%',
+    marginBottom: '15px',
+    fontSize: 'lg',
+  }}
+  value={formData.petsName}
+  onChange={handleInputChange}
+/>
+
           <Input
             type="text"
             name="address"
@@ -224,105 +250,101 @@ const Booking = () => {
 
           </Box>
           <FormControl style={radioGroupStyles}>
-            <FormLabel style={{marginTop:'12px'}}>Pet's Gender</FormLabel>
-            <RadioGroup defaultValue="female" name="radio-buttons-group">
+            <FormLabel style={{ marginTop: '12px' }}>Pet's Gender</FormLabel>
+            <RadioGroup
+              value={formData.gender} // Use value to set the initial value
+              onChange={(value) => handleGenderChange(value)} // Update the gender in formData
+            >
               <Stack direction="row">
                 <FormControlLabel
                   value="female"
                   control={<MuiRadio />}
                   label="Female"
-                  checked={gender === 'female'}
-                  onChange={() => setGender('female')}
                 />
                 <FormControlLabel
                   value="male"
                   control={<MuiRadio />}
                   label="Male"
-                  checked={gender === 'male'}
-                  onChange={() => setGender('male')}
                 />
               </Stack>
             </RadioGroup>
           </FormControl>
 
-          <FormControl
-            style={{
-              marginBottom: '15px',
-            }}
-          >
-            <FormLabel style={{display:'inline-block',marginRight:'12px'}}>Start of session:</FormLabel>
-            <DatePicker 
-              selected={formData.dateOfBirth}
-              onChange={(date) =>
-                handleInputChange({ target: { name: 'dateOfBirth', value: date } })
-              }
-              dateFormat="dd/MM/yyyy"
-              style={{marginLeft:'12px',
-                width: '100%',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-                padding: '10px',
-                fontSize: 'lg',
-              }}
-            />
-         <div style={{ display: 'inline-block', marginRight: '12px' }}>
+
+          <FormControl style={{ marginBottom: '15px' }}>
   <FormLabel style={{ display: 'inline-block', marginRight: '12px' }}>
-    End of session:
+    Start of session:
   </FormLabel>
   <DatePicker
-    selected={formData.dateOfBirth}
-    onChange={(date) =>
-      handleInputChange({ target: { name: 'dateOfBirth', value: date } })
-    }
+    selected={formData.dateOfStart}
+    onChange={(date) => handleInputChange({ target: { name: 'dateOfStart', value: date } })}
     dateFormat="dd/MM/yyyy"
     style={{
+      marginLeft: '12px',
       width: '100%',
       border: '1px solid #ccc',
       borderRadius: '5px',
       padding: '10px',
       fontSize: 'lg',
-      display: 'inline-block',
     }}
   />
-</div>
+  <div style={{ display: 'inline-block', marginRight: '12px' }}>
+    <FormLabel style={{ display: 'inline-block', marginRight: '12px' }}>
+      End of session:
+    </FormLabel>
+    <DatePicker
+      selected={formData.dateOfEnd}
+      onChange={(date) => handleInputChange({ target: { name: 'dateOfEnd', value: date } })}
+      dateFormat="dd/MM/yyyy"
+      style={{
+        width: '100%',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        padding: '10px',
+        fontSize: 'lg',
+        display: 'inline-block',
+      }}
+    />
+  </div>
+</FormControl>
 
-          </FormControl>
-          <FormLabel style={{marginBottom:'12px'}}>Type Of Pet:</FormLabel>
-          <Checkbox
-              name="Dog"
-              checked={formData.dog}
-              onChange={handleInputChange}
-            >
-              Dog
-            </Checkbox> <Checkbox
-              name="Cat"
-              checked={formData.cat}
-              onChange={handleInputChange}
-            >
-              Cat
-            </Checkbox>
-             
-            <Checkbox
-              name="Rabbit"
-              checked={formData.rabbit}
-              onChange={handleInputChange}
-            >
-              Rabbit
-            </Checkbox>
-            <Checkbox
-              name="Hamster"
-              checked={formData.hamster}
-              onChange={handleInputChange}
-            >
-              Hamster
-            </Checkbox>
-            <Checkbox
-              name="Turtle"
-              checked={formData.turtle}
-              onChange={handleInputChange}
-            >
-              Turtle
-            </Checkbox>
+<FormLabel style={{ marginBottom: '12px' }}>Type Of Pet:</FormLabel>
+<Checkbox
+  name="dog"
+  checked={formData.dog}
+  onChange={handleInputChange}
+>
+  Dog
+</Checkbox>
+<Checkbox
+  name="cat"
+  checked={formData.cat}
+  onChange={handleInputChange}
+>
+  Cat
+</Checkbox>
+<Checkbox
+  name="rabbit"
+  checked={formData.rabbit}
+  onChange={handleInputChange}
+>
+  Rabbit
+</Checkbox>
+<Checkbox
+  name="hamster"
+  checked={formData.hamster}
+  onChange={handleInputChange}
+>
+  Hamster
+</Checkbox>
+<Checkbox
+  name="turtle"
+  checked={formData.turtle}
+  onChange={handleInputChange}
+>
+  Turtle
+</Checkbox>
+
           {/* <Input
             type="text"
             name="petType"
@@ -364,6 +386,7 @@ const Booking = () => {
                   >
                     Should we feed your pet?
                   </Checkbox> */}
+
           <Button
             type="button"
             style={{display:'block',
@@ -381,9 +404,13 @@ const Booking = () => {
           >
             Submit
           </Button>
+          {/* <Link class="btn btn-primary btn-lg" to="/Preview" role="button">Preview</Link> */}
+          {/* <Button onClick={pdfGenerate}>Download PDF</Button> */}
         </form>
       </Box>
-    </Container></div>
+    </Container>
+    {showPreview && <Preview formData={formData} />}
+    </div>
 
   );
 };

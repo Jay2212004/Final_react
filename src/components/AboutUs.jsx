@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Typography, Button, Container, Grid, Card, CardContent
 const App = () => {
   return (
     <div>
-      <AppBar position="static">
+      {/* <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Company Name
@@ -13,7 +13,7 @@ const App = () => {
           <Button color="inherit">About</Button>
           <Button color="inherit">Contact</Button>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       
       <Container>
         <Typography variant="h2">About Us</Typography>
