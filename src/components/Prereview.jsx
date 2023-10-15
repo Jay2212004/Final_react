@@ -1,6 +1,6 @@
 import React from 'react';
 import jsPDF from 'jspdf';
-
+import Booking from './Booking';
 const Preview = ({ formData}) => {
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
@@ -47,7 +47,7 @@ const Preview = ({ formData}) => {
       yOffset += 10;
     }
 
-    doc.text(20, yOffset +20, `Pet's Gender: ${formData.gender}`);
+    doc.text(20, yOffset, `Pet's Gender: ${formData.gender === 'female' ? 'Female' : 'Male'}`);
 
     if (formData.dateOfStart && formData.dateOfEnd) {
       yOffset += 10;
@@ -160,9 +160,10 @@ const Preview = ({ formData}) => {
               <strong>Feed:</strong> {formData.feed ? 'Yes' : 'No'}
             </p>
           )}
-          <p>
-            <strong>Pet's Gender:</strong> {formData.gender}
-          </p>
+         <p>
+  <strong>Pet's Gender:</strong> {formData.petgender === 'female' ? 'Female' : 'Male'}
+</p>
+
           {formData.dateOfStart && (
             <p>
               <strong>Start of session:</strong> {formData.dateOfStart.toDateString()}
