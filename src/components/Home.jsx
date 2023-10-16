@@ -1,5 +1,6 @@
 import React, { useState } from 'react'; // Import useState from React
 import AppBar from '@mui/material/AppBar';
+import { useAuth0 } from "@auth0/auth0-react";
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -31,6 +32,7 @@ import { FormLabel } from '@chakra-ui/react';
 
 // const pages = ['Home', 'AboutUs', 'Mybookings']; // Define your pages
 // const settings = ['Profile','Logout']; // Define your settings
+
 
 const styles = {
   backgroundColor: '#E8F3D6',
@@ -81,6 +83,8 @@ const Home = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   return (<>
     <div>
       {/* <AppBar position="static" sx={{ backgroundColor: '#FAAB78' }}>
@@ -210,7 +214,17 @@ const Home = () => {
         <div class="container text-center">
           <h1 class="display-4">WELCOME TO PAWPRINT</h1>
           <p class="lead">The best pet daycare and grooming service in town.</p>
-          <Link class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
+          <Button>
+  {isAuthenticated ? (
+    <Link to="/Booking" className="btn btn-primary btn-lg" role="button">
+      Book Now
+    </Link>
+  ) : (
+    <span onClick={() => loginWithRedirect()}>Book Now</span>
+  )}
+</Button>
+
+
         </div>
       </div>
     </div><div class="container py-4" style={styles}>

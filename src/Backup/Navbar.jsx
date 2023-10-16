@@ -13,9 +13,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useAuth0 } from "@auth0/auth0-react";
 
-const pages = ['Home', 'AboutUs', 'Yourbookings']; // Define your pages
-const settings = ['Profile','Logout']; // Define your settings
+const pages = ['Home', 'AboutUs',]; // Define your pages
+const settings = ['Profile', 'Yourbookings', 'Logout'];
+ // Define your settings
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -24,7 +26,7 @@ function Navbar() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -37,11 +39,12 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
   return (
     <AppBar position="static" sx={{ backgroundColor: '#FAAB78' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />  */}
           <Typography
             variant="h6"
             noWrap
@@ -57,8 +60,9 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            
-            <Link class="btn btn-primary btn-lg" to="/Home" role="button"style={{textDecoration:'none',color:'white'}}>PAWPRINT</Link>
+            <Link to="/Home" style={{ textDecoration: 'none', color: 'white' }}>
+              PAWPRINT
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -92,14 +96,14 @@ function Navbar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Link to={'/${page}'} style={{ textDecoration: 'none' }}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <Link to={`/${page}`} style={{ textDecoration: 'none' }}>
+                    {page}
                   </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
           <Typography
             variant="h5"
             noWrap
@@ -118,55 +122,79 @@ function Navbar() {
           >
             PAWPRINT
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Link key={page} to={`/${page}`} style={{ textDecoration: 'none' }}>
-                <Button
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
+                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
                   {page}
                 </Button>
               </Link>
             ))}
           </Box>
+          {/* {isAuthenticated ? (
+  <Link to="/Yourbookings" style={{ textDecoration: 'none' }}>
+    <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+      Yourbookings
+    </Button>
+  </Link>
+) : null} */}
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Jay" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                   <Link key={setting} to={`/${setting}`} style={{ textDecoration: 'none' }}>
-                <Button
-                  // sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {setting}
-                </Button>
-              </Link>
-                  {/* <Typography textAlign="center">{</Typography> */}
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {isAuthenticated ? (
+            <div>
+             
+            </div>
+          ) : (
+            <Button onClick={() => loginWithRedirect()}>Log In</Button>
+          )}
+
+{isAuthenticated ? (
+  <Box sx={{ flexGrow: 0 }}>
+    <Tooltip title="Open Menu">
+      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+        {user ? (
+          <Avatar alt={user.name} src={user.picture} />
+        ) : (
+          <Avatar alt="Profile" />
+        )}
+      </IconButton>
+    </Tooltip>
+    <Menu
+      sx={{ mt: '45px' }}
+      id="menu-appbar"
+      anchorEl={anchorElUser}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={Boolean(anchorElUser)}
+      onClose={handleCloseUserMenu}
+    >
+      {settings.map((setting) => (
+  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+    {setting === 'Profile' || setting === 'Yourbookings' ? (
+      user ? (
+        <Link to={`/${setting}`} style={{ textDecoration: 'none' }}>
+          <Button>{setting}</Button>
+        </Link>
+      ) : (
+        <Button>{setting}</Button>
+      )
+    ) : (
+      <Button onClick={() => (setting === 'Logout' ? logout() : null)}>{setting}</Button>
+    )}
+  </MenuItem>
+))}
+
+    </Menu>
+  </Box>
+) : null}
+
         </Toolbar>
       </Container>
     </AppBar>
