@@ -1,111 +1,112 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
-import Booking from './Booking';
-const Preview = ({ formData}) => {
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
+import { Link } from 'react-router-dom';
 
-    // Set title
-    doc.setFontSize(18); // Increase font size for the title
-    doc.setFont('bold');
-    doc.text('PAWPRINT Booking Preview', 105, 15, null, null, 'center');
+const Preview = ({ formData }) => {
+  const [paymentDone, setPaymentDone] = useState(false);
+  const [pdfDownloaded, setPdfDownloaded] = useState(false);
+  const [pdfBlob, setPdfBlob] = useState(null);
 
-    // Reset font size and style
-    doc.setFontSize(12);
-    doc.setFont('normal');
+  useEffect(() => {
+    if (paymentDone && !pdfDownloaded) {
+      // Payment is done, generate the PDF
+      const doc = new jsPDF();
+      let yOffset = 40; 
 
-    let yOffset = 40; // Start content below the title
+      // Set the PDF content
+      doc.setFontSize(18); // Increase font size for the title
+      doc.setFont('bold');
+      doc.text('PAWPRINT Booking Preview', 105, 15, null, null, 'center');
+      doc.setFontSize(12);
+      doc.setFont('normal');
 
-    // Add content to the PDF
-    doc.text(20, yOffset, `First Name: ${formData.firstName}`);
-    doc.text(20, yOffset + 10, `Last Name: ${formData.lastName}`);
-    doc.text(20, yOffset + 20, `Pet's Name: ${formData.petsName}`);
-    doc.text(20, yOffset + 30, `Address: ${formData.address}`);
-    doc.text(20, yOffset + 40, `Phone Number: ${formData.phoneNumber}`);
-    doc.text(20, yOffset + 50, 'Services:');
-    yOffset += 60;
-
-    // List services
-    const services = [
-      { label: 'Grooming', value: formData.grooming },
-      { label: 'Training', value: formData.training },
-      { label: 'Daycare', value: formData.daycare },
-      { label: 'Walking', value: formData.walking },
-      { label: 'Boarding', value: formData.boarding },
-    ];
-
-    services.forEach((service) => {
-      if (service.value) {
-        doc.text(30, yOffset, service.label);
+      // Add content to the PDF using formData
+      doc.text(20, 40, `First Name: ${formData.firstName}`);
+      doc.text(20, 50, `Last Name: ${formData.lastName}`);
+      doc.text(20, 60, `Pet's Name: ${formData.petsName}`);
+      // Add other form data fields here
+      doc.text(20, yOffset + 20, `Pet's Name: ${formData.petsName}`);
+      doc.text(20, yOffset + 30, `Address: ${formData.address}`);
+      doc.text(20, yOffset + 40, `Phone Number: ${formData.phoneNumber}`);
+      doc.text(20, yOffset + 50, 'Services:');
+      yOffset += 60;
+  
+      // List services
+      const services = [
+        { label: 'Grooming', value: formData.grooming },
+        { label: 'Training', value: formData.training },
+        { label: 'Daycare', value: formData.daycare },
+        { label: 'Walking', value: formData.walking },
+        { label: 'Boarding', value: formData.boarding },
+      ];
+  
+      services.forEach((service) => {
+        if (service.value) {
+          doc.text(30, yOffset, service.label);
+          yOffset += 10;
+        }
+      });
+  
+      // Additional content
+      if (formData.daycare) {
+        doc.text(20, yOffset, `Feed: ${formData.feed ? 'Yes' : 'No'}`);
         yOffset += 10;
       }
-    });
-
-    // Additional content
-    if (formData.daycare) {
-      doc.text(20, yOffset, `Feed: ${formData.feed ? 'Yes' : 'No'}`);
+  
+      doc.text(20, yOffset, `Pet's Gender: ${formData.petgender === 'female' ? 'Female' : 'Male'}`);
+  
+      if (formData.dateOfStart && formData.dateOfEnd) {
+        yOffset += 10;
+        doc.text(20, yOffset, `Start of session: ${formData.dateOfStart.toDateString()}`);
+        doc.text(20, yOffset + 10, `End of session: ${formData.dateOfEnd.toDateString()}`);
+      }
+  
+      yOffset += 20;
+      doc.text(20, yOffset, 'Type of Pet:');
+  
+      // List types of pets
+      const petTypes = [
+        { label: 'Dog', value: formData.dog },
+        { label: 'Cat', value: formData.cat },
+        { label: 'Rabbit', value: formData.rabbit },
+        { label: 'Hamster', value: formData.hamster },
+        { label: 'Turtle', value: formData.turtle },
+      ];
+  
+      const selectedPetTypes = petTypes.filter((petType) => petType.value);
+  
+      // Build a comma-separated string of selected pet types
+      const selectedPetTypesString = selectedPetTypes.map((petType) => petType.label).join(', ');
+  
       yOffset += 10;
-    }
-
-    doc.text(20, yOffset, `Pet's Gender: ${formData.gender === 'female' ? 'Female' : 'Male'}`);
-
-    if (formData.dateOfStart && formData.dateOfEnd) {
+      doc.text(30, yOffset, selectedPetTypesString);
+  
       yOffset += 10;
-      doc.text(20, yOffset, `Start of session: ${formData.dateOfStart.toDateString()}`);
-      doc.text(20, yOffset + 10, `End of session: ${formData.dateOfEnd.toDateString()}`);
+      doc.text(20, yOffset, `Special Requirements: ${formData.specialRequirements}`);
+  
+      // Save the PDF as a blob
+      const blob = doc.output('blob');
+      setPdfBlob(blob);
+
+      setPdfDownloaded(true);
     }
+  }, [formData, paymentDone, pdfDownloaded]);
 
-    yOffset += 20;
-    doc.text(20, yOffset, 'Type of Pet:');
+  const handlePayment = () => {
+    // Simulate payment (you can replace this with actual payment logic)
+    // For this example, I'm simulating a delay with setTimeout
+    setTimeout(() => {
+      alert('Payment Done Successfully');
+      setPaymentDone(true);
+    }, 1000); // Simulate a 2-second payment process
+  };
 
-    // List types of pets
-    const petTypes = [
-      { label: 'Dog', value: formData.dog },
-      { label: 'Cat', value: formData.cat },
-      { label: 'Rabbit', value: formData.rabbit },
-      { label: 'Hamster', value: formData.hamster },
-      { label: 'Turtle', value: formData.turtle },
-    ];
+  const handleDownloadPDF = () => {
+    // Create a URL for the blob
+    const url = URL.createObjectURL(pdfBlob);
 
-    const selectedPetTypes = petTypes.filter((petType) => petType.value);
-
-    // Build a comma-separated string of selected pet types
-    const selectedPetTypesString = selectedPetTypes.map((petType) => petType.label).join(', ');
-
-    yOffset += 10;
-    doc.text(30, yOffset, selectedPetTypesString);
-
-    yOffset += 10;
-    doc.text(20, yOffset, `Special Requirements: ${formData.specialRequirements}`);
-
-    // Save the PDF as a blob
-    const blob = doc.output('blob');
-
-    // Create a download link for the PDF
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'booking_preview.pdf';
-    a.style.textDecoration = 'none'; // Remove underlines
-    a.style.padding = '10px 20px'; // Add padding
-    a.style.border = '2px solid #007bff'; // Add border
-    a.style.borderRadius = '5px'; // Add border radius
-    a.style.color = '#007bff'; // Change text color
-    a.style.cursor = 'pointer'; // Add pointer cursor
-    a.style.display = 'inline-block'; // Make it inline-block
-    a.style.marginTop = '20px'; // Add top margin
-    a.style.textAlign = 'center'; // Center-align text
-    a.innerText = 'Download PDF';
-
-    // Replace the content of the "Download PDF" button with the styled link
-    const downloadPdfButton = document.getElementById('downloadPdfButton');
-    downloadPdfButton.innerHTML = '';
-    downloadPdfButton.appendChild(a);
-
-    // Hide the "Download PDF" button when the link is clicked
-    a.addEventListener('click', () => {
-      downloadPdfButton.style.display = 'none';
-    });
+    // Open the blob content in a new window or tab
+    window.open(url, '_blank');
   };
 
   return (
@@ -120,10 +121,9 @@ const Preview = ({ formData}) => {
           margin: '0 auto',
         }}
       >
-        {/* Title */}
         <h2
           style={{
-            fontSize: '20px', // Corrected size value
+            fontSize: '20px',
             fontWeight: 'bold',
             marginBottom: '20px',
             textAlign: 'center',
@@ -131,17 +131,21 @@ const Preview = ({ formData}) => {
         >
           Booking Preview
         </h2>
-        <div>
-          <p>
-            <strong>First Name:</strong> {formData.firstName}
-          </p>
-          <p>
-            <strong>Last Name:</strong> {formData.lastName}
-          </p>
-          <p>
-            <strong>Pet's Name:</strong> {formData.petsName}
-          </p>
-          <p>
+
+        {paymentDone && pdfDownloaded ? (
+          // Display the content along with the title after PDF download
+          <div>
+            <div>
+              <p>
+                <strong>First Name:</strong> {formData.firstName}
+              </p>
+              <p>
+                <strong>Last Name:</strong> {formData.lastName}
+              </p>
+              <p>
+                <strong>Pet's Name:</strong> {formData.petsName}
+              </p>
+              <p>
             <strong>Address:</strong> {formData.address}
           </p>
           <p>
@@ -161,7 +165,7 @@ const Preview = ({ formData}) => {
             </p>
           )}
          <p>
-  <strong>Pet's Gender:</strong> {formData.petgender === 'female' ? 'Female' : 'Male'}
+         <strong>Pet's Gender:</strong> {formData.petgender === 'female' ? 'Female' : 'Male'}
 </p>
 
           {formData.dateOfStart && (
@@ -186,9 +190,18 @@ const Preview = ({ formData}) => {
             <strong>Special Requirements:</strong> {formData.specialRequirements}
           </p>
         </div>
-        <div id="downloadPdfButton" style={{ textAlign: 'center', marginTop: '20px' }}>
-          <button onClick={handleDownloadPDF}>Download PDF</button>
-          <button>Pay</button>
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+              <button onClick={handleDownloadPDF}>Download PDF</button>
+            </div>
+          </div>
+        ) : (
+          // Display payment button
+          <div style={{ textAlign: 'center' }}>
+            <button onClick={handlePayment}>Pay Now</button>
+          </div>
+        )}
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+         
         </div>
       </div>
     </div>

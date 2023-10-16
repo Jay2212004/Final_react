@@ -254,29 +254,30 @@ const Booking = () => {
               )}
             </Box>
             <FormControl style={radioGroupStyles}>
-              <FormLabel style={{ marginTop: '12px' }}>Pet's Gender</FormLabel>
-              <RadioGroup
-  value={formData.petgender}
-  onChange={(value) => handleGenderChange(value)}
->
-                <Stack direction="row">
-                  <FormControlLabel
-                    value="female"
-                    control={<MuiRadio />}
-                    label="Female"
-                    checked={petgender === 'female'}
-                    onChange={() => setGender('female')}
-                  />
-                  <FormControlLabel
-                    value="male"
-                    control={<MuiRadio />}
-                    label="Male"
-                    checked={petgender === 'male'}
-                    onChange={() => setGender('male')}
-                  />
-                </Stack>
-              </RadioGroup>
-            </FormControl>
+  <FormLabel style={{ marginTop: '12px' }}>Pet's Gender</FormLabel>
+  <RadioGroup
+    value={formData.petgender}
+    onChange={(value) => handleGenderChange(value)}
+  >
+    <Stack direction="row">
+      <FormControlLabel
+        value="female"
+        control={<MuiRadio />}
+        label="Female"
+        checked={formData.petgender === 'female'}
+        onChange={() => handleGenderChange('female')}
+      />
+      <FormControlLabel
+        value="male"
+        control={<MuiRadio />}
+        label="Male"
+        checked={formData.petgender === 'male'}
+        onChange={() => handleGenderChange('male')}
+      />
+    </Stack>
+  </RadioGroup>
+</FormControl>
+
             <FormControl style={{ marginBottom: '15px' }}>
               <FormLabel style={{ display: 'inline-block', marginRight: '12px' }}>
                 Start of session:
@@ -381,12 +382,13 @@ const Booking = () => {
                 borderRadius: '5px',
                 cursor: 'pointer',
                 width: '100%',
-                transition: 'background-color 0.2s',
+                
               }}
               onClick={handleSubmit}
             >
               Submit
             </Button>
+            
           </form>
         </Box>
       </Container>
