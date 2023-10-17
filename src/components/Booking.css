@@ -6,6 +6,7 @@
      /* Replace with your background image URL */
     background-size:50%;
     background-repeat: repeat;
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
     font-family: Arial, sans-serif; /* You can change the font-family as needed */
+    
 }

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import { Link } from 'react-router-dom';
+import { loadScript } from './utils'; // Create a utility function to load external scripts
 
 const Preview = ({ formData }) => {
   const [paymentDone, setPaymentDone] = useState(false);
   const [pdfDownloaded, setPdfDownloaded] = useState(false);
   const [pdfBlob, setPdfBlob] = useState(null);
-
+  const [razorpay, setRazorpay] = useState(null); // Store Razorpay instance
   useEffect(() => {
-    if (paymentDone && !pdfDownloaded) {
+
       // Payment is done, generate the PDF
       const doc = new jsPDF();
       let yOffset = 40; 
@@ -68,9 +69,7 @@ const Preview = ({ formData }) => {
       const petTypes = [
         { label: 'Dog', value: formData.dog },
         { label: 'Cat', value: formData.cat },
-        { label: 'Rabbit', value: formData.rabbit },
-        { label: 'Hamster', value: formData.hamster },
-        { label: 'Turtle', value: formData.turtle },
+     
       ];
   
       const selectedPetTypes = petTypes.filter((petType) => petType.value);
@@ -89,16 +88,89 @@ const Preview = ({ formData }) => {
       setPdfBlob(blob);
 
       setPdfDownloaded(true);
-    }
+    
   }, [formData, paymentDone, pdfDownloaded]);
 
-  const handlePayment = () => {
-    // Simulate payment (you can replace this with actual payment logic)
-    // For this example, I'm simulating a delay with setTimeout
-    setTimeout(() => {
-      alert('Payment Done Successfully');
-      setPaymentDone(true);
-    }, 1000); // Simulate a 2-second payment process
+  // useEffect(() => {
+  //   if (paymentDone && !pdfDownloaded) {
+  //     // Payment is done, generate the PDF
+  //     const doc = new jsPDF();
+  //     let yOffset = 40;
+
+  //     // Set the PDF content (same as in your original code)
+
+  //     // Save the PDF as a blob
+  //     const blob = doc.output('blob');
+  //     setPdfBlob(blob);
+
+  //     setPdfDownloaded(true);
+  //   }
+  // }, [formData, paymentDone, pdfDownloaded]);
+
+  // useEffect(() => {
+  //   // Load Razorpay script once the component mounts
+  //   loadScript('https://checkout.razorpay.com/v1/razorpay.js', initializeRazorpay);
+  // }, []);
+
+  // const initializeRazorpay = () => {
+  //   if (window.Razorpay) {
+  //     const razorpayInstance = new window.Razorpay({
+  //       key: 'rzp_test_jLzMullevuP0L8', // Replace with your Razorpay API key
+  //       amount: 10000, // Amount in paise (e.g., 10000 paise = 100 INR)
+  //       currency: 'INR',
+  //       name: 'PAWPRINT',
+  //       description: 'Booking Payment',
+  //       image: '/your-logo.png', // Replace with your logo URL
+  //       order_id: 'YOUR_ORDER_ID', // Replace with the actual order ID from your server
+  //       handler: function (response) {
+  //         alert('Payment Successful');
+  //         setPaymentDone(true);
+  //         razorpayInstance.close(); // Close the Razorpay payment window
+  //       },
+  //       prefill: {
+  //         name: formData.firstName, // Pre-fill customer details from your form
+  //         email: formData.email,
+  //         contact: formData.phoneNumber,
+  //       },
+  //       theme: {
+  //         color: '#F37254', // Customize the color scheme
+  //       },
+  //     });
+
+  //     setRazorpay(razorpayInstance);
+  //   }
+  // };
+  var amount=1000;
+
+  const handlePayment = (e) => {
+   e.preventDefault();
+    if(amount ===""){
+      alert("Please enter amount")
+    }else{
+      var options={
+        key:"rzp_test_jLzMullevuP0L8",
+        key_secret:"ip76dxg0yK98U59Q6XS3ad55",
+        amount:amount*100,
+        currency:"INR",
+        image:"https://th.bing.com/th/id/OIG.6oVz_YCy_skTGsSYId2e?w=173&h=173&c=6&r=0&o=5&dpr=1.3&pid=ImgGn",
+        name:"PAWPRINT",
+        description:"Payment for service",
+        handler:function(response){
+          alert(response.razorpay_payment_id);
+        },
+        prefill:{
+          name:"Jay Uchagaonkar",
+          email:"uchagaonkar54jay@gmail.com",
+          contact:"8356024668"
+        },
+        notes:{address:"Borivali"},
+        theme:{
+          color:"#3399cc"
+        }
+      };
+      var pay=new window.Razorpay(options);
+      pay.open();
+    }
   };
 
   const handleDownloadPDF = () => {
@@ -131,12 +203,9 @@ const Preview = ({ formData }) => {
         >
           Booking Preview
         </h2>
-
-        {paymentDone && pdfDownloaded ? (
-          // Display the content along with the title after PDF download
+        <>
           <div>
-            <div>
-              <p>
+          <p>
                 <strong>First Name:</strong> {formData.firstName}
               </p>
               <p>
@@ -181,28 +250,18 @@ const Preview = ({ formData }) => {
           <p>
             <strong>Type of Pet:</strong>
             {formData.dog && <span> Dog</span>}
-            {formData.cat && <span> Cat</span>}
-            {formData.rabbit && <span> Rabbit</span>}
-            {formData.hamster && <span> Hamster</span>}
-            {formData.turtle && <span> Turtle</span>}
-          </p>
+            {formData.cat && <span> Cat</span>}</p>
+          
           <p>
             <strong>Special Requirements:</strong> {formData.specialRequirements}
           </p>
-        </div>
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <button onClick={handleDownloadPDF}>Download PDF</button>
-            </div>
           </div>
-        ) : (
-          // Display payment button
+    
           <div style={{ textAlign: 'center' }}>
             <button onClick={handlePayment}>Pay Now</button>
-          </div>
-        )}
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-         
-        </div>
+            <button onClick={handleDownloadPDF}>Download PDF</button>
+          </div></>
+        
       </div>
     </div>
   );

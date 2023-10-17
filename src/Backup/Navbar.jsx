@@ -60,6 +60,7 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
+             
             <Link to="/Home" style={{ textDecoration: 'none', color: 'white' }}>
               PAWPRINT
             </Link>
@@ -102,6 +103,7 @@ function Navbar() {
                 </MenuItem>
               ))}
             </Menu>
+            
           </Box>
 
           <Typography
@@ -122,7 +124,7 @@ function Navbar() {
           >
             PAWPRINT
           </Typography>
-
+              
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Link key={page} to={`/${page}`} style={{ textDecoration: 'none' }}>
@@ -138,14 +140,28 @@ function Navbar() {
       Yourbookings
     </Button>
   </Link>
-) : null} */}
+) : null} */}<marquee style={{ color: 'white', fontSize: '1.2rem', fontStyle: 'italic' }}>
+Visiting hours:-10am to 5pm
+</marquee>
 
           {isAuthenticated ? (
             <div>
              
             </div>
           ) : (
-            <Button onClick={() => loginWithRedirect()}>Log In</Button>
+            <Button 
+  style={{
+    fontSize: '15px',
+     // Change the background color to your preference
+    color: 'white', // Change the text color to your preference
+    padding: '2px 2px', // Adjust the padding to your preference
+    borderRadius: '5px' // Add rounded corners for a better look
+  }} 
+  onClick={() => loginWithRedirect()}
+>
+  Log In
+</Button>
+
           )}
 
 {isAuthenticated ? (
@@ -159,6 +175,7 @@ function Navbar() {
         )}
       </IconButton>
     </Tooltip>
+    
     <Menu
       sx={{ mt: '45px' }}
       id="menu-appbar"
@@ -189,6 +206,7 @@ function Navbar() {
       <Button onClick={() => (setting === 'Logout' ? logout() : null)}>{setting}</Button>
     )}
   </MenuItem>
+  
 ))}
 
     </Menu>

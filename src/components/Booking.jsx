@@ -3,11 +3,12 @@ import './Booking.css';
 import jsPDF from 'jspdf';
 import { Link } from 'react-router-dom';
 import Preview from './Prereview';
+import Checkbox from '@mui/material/Checkbox';
 import {
   Container,
   Box,
   Text,
-  Checkbox,
+
   FormControl,
   FormLabel,
   Input,
@@ -19,6 +20,7 @@ import {
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FormControlLabel, Radio as MuiRadio } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 const Booking = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -35,11 +37,9 @@ const Booking = () => {
     boarding: false,
     dog: false,
     cat: false,
-    hamster: false,
-    turtle: false,
-    rabbit: false,
+    vetenary: false,
     feed: false,
-    
+
     dateOfStart: new Date(),
     dateOfEnd: new Date(),
     specialRequirements: '',
@@ -65,7 +65,18 @@ const Booking = () => {
   const radioGroupStyles = {
     marginBottom: '20px',
   };
-
+  const styles = {
+    checkboxContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      marginBottom: '10px',
+    },
+    checkboxLabel: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+  };
+  
   const [petgender, setGender] = useState('female');
 
   const handlePhoneNumberChange = (e) => {
@@ -74,7 +85,11 @@ const Booking = () => {
     setIsValidPhoneNumber(phoneRegex.test(phoneNumber));
     handleInputChange(e);
   };
+  const [checked, setChecked] = React.useState(true);
 
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
   const handleSubmit = () => {
     setShowPreview(true);
   };
@@ -196,87 +211,102 @@ const Booking = () => {
               </p>
             )}
 
-            <Box
-              style={{
-                marginBottom: '10px',
-              }}
-            >
-              <FormLabel>Services:</FormLabel>
-              <Checkbox
-                style={{ marginTop: '10px' }}
-                name="grooming"
-                checked={formData.grooming}
-                onChange={handleInputChange}
-              >
-                Grooming
-              </Checkbox>
-              <Checkbox
-                style={{ marginTop: '10px' }}
-                name="training"
-                checked={formData.training}
-                onChange={handleInputChange}
-              >
-                Training
-              </Checkbox>
-              <Checkbox
-                style={{ marginTop: '10px' }}
-                name="daycare"
-                checked={formData.daycare}
-                onChange={handleInputChange}
-              >
-                Daycare
-              </Checkbox>
-              <Checkbox
-                style={{ marginTop: '10px' }}
-                name="walking"
-                checked={formData.walking}
-                onChange={handleInputChange}
-              >
-                Walking
-              </Checkbox>
-              <Checkbox
-                style={{ marginTop: '10px' }}
-                name="boarding"
-                checked={formData.boarding}
-                onChange={handleInputChange}
-              >
-                Boarding
-              </Checkbox>
-              {formData.daycare && (
-                <Checkbox
-                  style={{ display: 'block', marginTop: '10px' }}
-                  name="feed"
-                  checked={formData.feed}
-                  onChange={handleInputChange}
-                >
-                  Should we feed your pet?
-                </Checkbox>
-              )}
-            </Box>
+           
+<FormLabel>Services:</FormLabel>
+<Box style={styles.checkboxContainer}>
+  <div style={styles.checkboxLabel}>
+    <Checkbox
+      checked={formData.grooming}
+      onChange={handleInputChange}
+      name="grooming"
+    />
+    <Typography variant="">Grooming</Typography>
+  </div>
+
+  <div style={styles.checkboxLabel}>
+    <Checkbox
+      checked={formData.training}
+      onChange={handleInputChange}
+      name="training"
+    />
+    <Typography variant="">Training</Typography>
+  </div>
+
+  <div style={styles.checkboxLabel}>
+    <Checkbox
+      checked={formData.daycare}
+      onChange={handleInputChange}
+      name="daycare"
+    />
+    <Typography variant="">DayCare</Typography>
+  </div>
+
+  <div style={styles.checkboxLabel}>
+    <Checkbox
+      checked={formData.walking}
+      onChange={handleInputChange}
+      name="walking"
+    />
+    <Typography variant="">Walking</Typography>
+  </div>
+
+  <div style={styles.checkboxLabel}>
+    <Checkbox
+      checked={formData.boarding}
+      onChange={handleInputChange}
+      name="boarding"
+    />
+    <Typography variant="">Boarding</Typography>
+  </div>
+
+  {formData.daycare && (
+    <div style={styles.checkboxLabel}>
+      <Checkbox
+        checked={formData.feed}
+        onChange={handleInputChange}
+        name="feed"
+      />
+      <Typography variant="">Should we feed your pet?</Typography>
+    </div>
+  )}
+
+  <div style={styles.checkboxLabel}>
+    <Checkbox
+      checked={formData.vetenary}
+      onChange={handleInputChange}
+      name="vetenary"
+    />
+    <Typography variant="">Veterinary Services</Typography>
+  </div>
+</Box>
+
+
             <FormControl style={radioGroupStyles}>
-  <FormLabel style={{ marginTop: '12px' }}>Pet's Gender</FormLabel>
-  <RadioGroup
-    value={formData.petgender}
-    onChange={(value) => handleGenderChange(value)}
-  >
-    <Stack direction="row">
-      <FormControlLabel
-        value="female"
-        control={<MuiRadio />}
-        label="Female"
-        checked={formData.petgender === 'female'}
-        onChange={() => handleGenderChange('female')}
-      />
-      <FormControlLabel
-        value="male"
-        control={<MuiRadio />}
-        label="Male"
-        checked={formData.petgender === 'male'}
-        onChange={() => handleGenderChange('male')}
-      />
-    </Stack>
-  </RadioGroup>
-</FormControl>
+              <FormLabel style={{ marginTop: '12px' }}>Pet's Gender</FormLabel>
+              <RadioGroup
+                value={formData.petgender}
+                onChange={(value) => handleGenderChange(value)}
+              >
+                <Stack direction="row">
+                  <FormControlLabel
+                    value="female"
+                    control={<MuiRadio />}
+                    label="Female"
+                    checked={formData.petgender === 'female'}
+                    onChange={() => handleGenderChange('female')}
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<MuiRadio />}
+                    label="Male"
+                    checked={formData.petgender === 'male'}
+                    onChange={() => handleGenderChange('male')}
+                  />
+                </Stack>
+              </RadioGroup>
+
+            </FormControl>
+
 
             <FormControl style={{ marginBottom: '15px' }}>
               <FormLabel style={{ display: 'inline-block', marginRight: '12px' }}>
@@ -324,36 +354,16 @@ const Booking = () => {
               checked={formData.dog}
               onChange={handleInputChange}
             >
-              Dog
-            </Checkbox>
+              
+            </Checkbox> <Typography variant="">Dog</Typography>
             <Checkbox
               name="cat"
               checked={formData.cat}
               onChange={handleInputChange}
             >
-              Cat
-            </Checkbox>
-            <Checkbox
-              name="rabbit"
-              checked={formData.rabbit}
-              onChange={handleInputChange}
-            >
-              Rabbit
-            </Checkbox>
-            <Checkbox
-              name="hamster"
-              checked={formData.hamster}
-              onChange={handleInputChange}
-            >
-              Hamster
-            </Checkbox>
-            <Checkbox
-              name="turtle"
-              checked={formData.turtle}
-              onChange={handleInputChange}
-            >
-              Turtle
-            </Checkbox>
+            
+            </Checkbox><Typography variant="">Cat</Typography>
+            {/* Add more checkboxes here if needed */}
             <Input
               type="text"
               name="specialRequirements"
@@ -382,13 +392,11 @@ const Booking = () => {
                 borderRadius: '5px',
                 cursor: 'pointer',
                 width: '100%',
-                
               }}
               onClick={handleSubmit}
             >
               Submit
             </Button>
-            
           </form>
         </Box>
       </Container>
