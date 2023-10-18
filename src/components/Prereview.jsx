@@ -12,6 +12,9 @@ const Preview = ({ formData }) => {
       // Payment is done, generate the PDF
       const doc = new jsPDF();
       let yOffset = 40; 
+     
+      
+      
 
       // Set the PDF content
       doc.setFontSize(18); // Increase font size for the title
@@ -81,7 +84,9 @@ const Preview = ({ formData }) => {
   
       yOffset += 10;
       doc.text(20, yOffset, `Special Requirements: ${formData.specialRequirements}`);
-  
+      // doc.text(20, yOffset, `Payment Id: ${formData.razorpay_payment_id}`);
+      yOffset += 10;
+      doc.text(20, yOffset, 'Payment Successfull!!!!');
       // Save the PDF as a blob
       const blob = doc.output('blob');
       setPdfBlob(blob);
@@ -90,55 +95,7 @@ const Preview = ({ formData }) => {
     
   }, [formData, paymentDone, pdfDownloaded]);
 
-  // useEffect(() => {
-  //   if (paymentDone && !pdfDownloaded) {
-  //     // Payment is done, generate the PDF
-  //     const doc = new jsPDF();
-  //     let yOffset = 40;
-
-  //     // Set the PDF content (same as in your original code)
-
-  //     // Save the PDF as a blob
-  //     const blob = doc.output('blob');
-  //     setPdfBlob(blob);
-
-  //     setPdfDownloaded(true);
-  //   }
-  // }, [formData, paymentDone, pdfDownloaded]);
-
-  // useEffect(() => {
-  //   // Load Razorpay script once the component mounts
-  //   loadScript('https://checkout.razorpay.com/v1/razorpay.js', initializeRazorpay);
-  // }, []);
-
-  // const initializeRazorpay = () => {
-  //   if (window.Razorpay) {
-  //     const razorpayInstance = new window.Razorpay({
-  //       key: 'rzp_test_jLzMullevuP0L8', // Replace with your Razorpay API key
-  //       amount: 10000, // Amount in paise (e.g., 10000 paise = 100 INR)
-  //       currency: 'INR',
-  //       name: 'PAWPRINT',
-  //       description: 'Booking Payment',
-  //       image: '/your-logo.png', // Replace with your logo URL
-  //       order_id: 'YOUR_ORDER_ID', // Replace with the actual order ID from your server
-  //       handler: function (response) {
-  //         alert('Payment Successful');
-  //         setPaymentDone(true);
-  //         razorpayInstance.close(); // Close the Razorpay payment window
-  //       },
-  //       prefill: {
-  //         name: formData.firstName, // Pre-fill customer details from your form
-  //         email: formData.email,
-  //         contact: formData.phoneNumber,
-  //       },
-  //       theme: {
-  //         color: '#F37254', // Customize the color scheme
-  //       },
-  //     });
-
-  //     setRazorpay(razorpayInstance);
-  //   }
-  // };
+  
   var amount=1000;
 
   const handlePayment = (e) => {
@@ -171,6 +128,7 @@ const Preview = ({ formData }) => {
       pay.open();
     }
   };
+  
 
   const handleDownloadPDF = () => {
     // Create a URL for the blob

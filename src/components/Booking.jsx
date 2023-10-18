@@ -134,7 +134,7 @@ var Booking = () => {
     specialRequirements}=userData;
 
     if(firstName && lastName&& petsName&& address&& phoneNumber&& grooming|| training|| daycare|| walking|| boarding|| dog|| cat|| vetenary|| feed|| dateOfStart&& dateOfEnd&& specialRequirements){
-
+      
      
 
   var res=await fetch("https://pawprint-1af7d-default-rtdb.firebaseio.com/BookingDataRecords.json",{
@@ -185,7 +185,7 @@ var Booking = () => {
   dateOfEnd,
   specialRequirements,
       })
-      alert("Data Stored!");
+      alert("Your services are booked succesfully,please complete the payment and also scroll to check the preview!!!!!\nYou'll get your payment receipt with the payment id after the payment is done.");
     }
     else{
       alert("Please fill the data");
