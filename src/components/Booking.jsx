@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import './Booking.css';
-import jsPDF from 'jspdf';
-import { Link } from 'react-router-dom';
 import Preview from './Prereview';
 import Checkbox from '@mui/material/Checkbox';
 import {
   Container,
   Box,
   Text,
-
   FormControl,
   FormLabel,
   Input,
@@ -22,9 +19,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { FormControlLabel, Radio as MuiRadio } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-const Booking = () => {
-  const [showPreview, setShowPreview] = useState(false);
-  const [formData, setFormData] = useState({
+var Booking = () => {
+  var name,value;
+  var[userData,setUserData]=useState({
     firstName: '',
     lastName: '',
     petsName: '',
@@ -39,16 +36,38 @@ const Booking = () => {
     cat: false,
     vetenary: false,
     feed: false,
+    dateOfStart: new Date(),
+    dateOfEnd: new Date(),
+    specialRequirements: '',
+  });
+  var [showPreview, setShowPreview] = useState(false);
+  var [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    petsName: '',
+    address: '',
+    phoneNumber: '',
+    grooming: '',
+    training: '',
+    daycare: '',
+    walking: '',
+    boarding: '',
+    dog: '',
+    cat: '',
+    vetenary: '',
+    feed: '',
 
     dateOfStart: new Date(),
     dateOfEnd: new Date(),
     specialRequirements: '',
   });
-  const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
+  var [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
+  
+  var handleInputChange = (e) => {
+    var { name, value, type, checked } = e.target;
+    name=e.target.name;
+    value=e.target.value;
+    setUserData({...userData,[name]:value});
     if (type === 'checkbox') {
       setFormData({
         ...formData,
@@ -62,10 +81,10 @@ const Booking = () => {
     }
   };
 
-  const radioGroupStyles = {
+  var radioGroupStyles = {
     marginBottom: '20px',
   };
-  const styles = {
+  var styles = {
     checkboxContainer: {
       display: 'flex',
       flexDirection: 'column',
@@ -77,23 +96,110 @@ const Booking = () => {
     },
   };
   
-  const [petgender, setGender] = useState('female');
+  var [petgender, setGender] = useState('female');
 
-  const handlePhoneNumberChange = (e) => {
-    const phoneNumber = e.target.value;
-    const phoneRegex = /^\d{10}$/; // Change this pattern according to your requirements.
+  var handlePhoneNumberChange = (e) => {
+    name=e.target.name;
+    value=e.target.value;
+    setUserData({...userData,[name]:value});
+    var phoneNumber = e.target.value;
+    var phoneRegex = /^\d{10}$/; // Change this pattern according to your requirements.
     setIsValidPhoneNumber(phoneRegex.test(phoneNumber));
     handleInputChange(e);
   };
-  const [checked, setChecked] = React.useState(true);
+  var [checked, setChecked] = React.useState(true);
 
-  const handleChange = (event) => {
+  var handleChange = (event) => {
     setChecked(event.target.checked);
   };
-  const handleSubmit = () => {
+  //connection with firebase
+  var handleSubmit = async(e) => {
+  e.preventDefault();
+  var {firstName,
+    lastName,
+    petsName,
+    address,
+    phoneNumber,
+    grooming,
+    training,
+    daycare,
+    walking,
+    boarding,
+    dog,
+    cat,
+    vetenary,
+    feed,
+    dateOfStart,
+    dateOfEnd,
+    specialRequirements}=userData;
+
+    if(firstName && lastName&& petsName&& address&& phoneNumber&& grooming|| training|| daycare|| walking|| boarding|| dog|| cat|| vetenary|| feed|| dateOfStart&& dateOfEnd&& specialRequirements){
+
+     
+
+  var res=await fetch("https://pawprint-1af7d-default-rtdb.firebaseio.com/BookingDataRecords.json",{
+  method : "POST",
+  headers : {
+    "Content-Type":"application/json",
+  },
+  body:JSON.stringify({
+    firstName,
+  lastName,
+  petsName,
+  address,
+  phoneNumber,
+  grooming,
+  training,
+  daycare,
+  walking,
+  boarding,
+  dog,
+  cat,
+  vetenary,
+  feed,
+  dateOfStart,
+  dateOfEnd,
+  specialRequirements,
+  })
+  }
+  );
     setShowPreview(true);
-  };
-  const handleGenderChange = (value) => {
+
+    if (res){
+      setUserData({
+        firstName,
+  lastName,
+  petsName,
+  address,
+  phoneNumber,
+  grooming,
+  training,
+  daycare,
+  walking,
+  boarding,
+  dog,
+  cat,
+  vetenary,
+  feed,
+  dateOfStart,
+  dateOfEnd,
+  specialRequirements,
+      })
+      alert("Data Stored!");
+    }
+    else{
+      alert("Please fill the data");
+  } }else{
+    alert("Please fill the data");}
+  }; 
+  const handleGenderChange = (value,e) => {
+    // let name,value;
+    // name=value1.target.name;
+    // value=value1.target.value;
+    // setUserData({...userData,[name]:value1});
+    // name=e.target.name;
+    // value=e.target.value;
+    // setUserData({...userData,[name]:value});
     setFormData({
       ...formData,
       petgender: value,
@@ -276,7 +382,7 @@ const Booking = () => {
       onChange={handleInputChange}
       name="vetenary"
     />
-    <Typography variant="">Veterinary Services</Typography>
+    <Typography variant="">Vetenary Services</Typography>
   </div>
 </Box>
 
@@ -404,5 +510,4 @@ const Booking = () => {
     </div>
   );
 };
-
 export default Booking;

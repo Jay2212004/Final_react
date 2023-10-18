@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
-import { Link } from 'react-router-dom';
-import { loadScript } from './utils'; // Create a utility function to load external scripts
+
 
 const Preview = ({ formData }) => {
   const [paymentDone, setPaymentDone] = useState(false);

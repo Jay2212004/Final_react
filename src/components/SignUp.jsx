@@ -1,5 +1,4 @@
 import React from 'react'
-import SignUp from './SignUp.css'
 import { Container, TextField, Button, Typography } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { InputAdornment, IconButton } from '@mui/material';

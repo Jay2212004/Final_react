@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,16 +12,21 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { useAuth0 } from "@auth0/auth0-react";
 
-const pages = ['Home', 'AboutUs',]; // Define your pages
-const settings = ['Profile', 'Yourbookings', 'Logout'];
- // Define your settings
+import { useAuth0 } from "@auth0/auth0-react";
+import Cookies from 'js-cookie';
+
+const pages = ['Home', 'AboutUs']; // Define your pages
+const settings = ['Profile', 'Yourbookings', 'Logout']; // Define your settings
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+  // Check if the cookie exists
+  const isAuth0UserCookieSet = !!Cookies.get('auth0_user_id');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,7 +44,12 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  // Log out the user and remove the cookie
+  const onLogout = () => {
+    Cookies.remove('auth0_user_id');
+    // Perform the logout action (e.g., calling Auth0's logout method)
+    logout();
+  };
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#FAAB78' }}>
@@ -61,9 +71,12 @@ function Navbar() {
             }}
           >
              
-            <Link to="/Home" style={{ textDecoration: 'none', color: 'white' }}>
-              PAWPRINT
-            </Link>
+             <Link to="/Home" style={{ textDecoration: 'none', color: 'white' }}>
+  <span style={{ fontSize: '18px',display:'inline-block',paddingRight:'35px' }}>
+    PAWPRINT
+  </span>
+</Link>
+
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -140,11 +153,12 @@ function Navbar() {
       Yourbookings
     </Button>
   </Link>
-) : null} */}<marquee style={{ color: 'white', fontSize: '1.2rem', fontStyle: 'italic' }}>
-Visiting hours:-10am to 5pm
-</marquee>
+// ) : null} */}
+<marquee style={{ color: 'white', fontSize: '1.2rem', fontStyle: 'italic',display:'inline-block' }}>
+ Visiting hours:-10am to 5pm
+ </marquee>
 
-          {isAuthenticated ? (
+          {/* {isAuthenticated ? (
             <div>
              
             </div>
@@ -160,9 +174,9 @@ Visiting hours:-10am to 5pm
   onClick={() => loginWithRedirect()}
 >
   Log In
-</Button>
+</Button> */}
 
-          )}
+          
 
 {isAuthenticated ? (
   <Box sx={{ flexGrow: 0 }}>

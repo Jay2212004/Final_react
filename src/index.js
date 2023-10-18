@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+
 import reportWebVitals from './reportWebVitals';
 import Preview from './components/Prereview';
 import { Auth0Provider } from '@auth0/auth0-react';
@@ -11,9 +12,10 @@ import Navbar from './Backup/Navbar';
 import Booking from './components/Booking';
 import Profile from './components/Profile';
 import Logout from './components/Logout';
-import {Routes, Route,BrowserRouter as Router} from "react-router-dom";
+import {Routes, Route,Redirect,BrowserRouter as Router} from "react-router-dom";
 import { FormDataProvider } from './components/FormDataContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <Auth0Provider
     domain="dev-d31oydu0zkp1xwt0.us.auth0.com"

@@ -87,147 +87,42 @@ const Home = () => {
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   return (<>
     <div>
-      {/* <AppBar position="static" sx={{ backgroundColor: '#FAAB78' }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            PAWPRINT
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Link to={'/${page}'} style={{ textDecoration: 'none' }}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </Link>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            PAWPRINT
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Link key={page} to={`/${page}`} style={{ textDecoration: 'none' }}>
-                <Button
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page}
-                </Button>
-              </Link>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Jay" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar> */}
       <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
           <h1 class="display-4">WELCOME TO PAWPRINT</h1>
-          <p class="lead">The best pet daycare and grooming service in town.</p>
+          <p style={{ fontWeight: 'bold'}}class="lead">The best pet daycare and grooming service in town.</p>
           <Button>
-  {isAuthenticated ? (
-    <Link to="/Booking" className="btn btn-primary btn-lg" role="button">
-      Book Now
-    </Link>
-  ) : (
-    <span onClick={() => loginWithRedirect()}>Book Now</span>
-  )}
-</Button>
+            {isAuthenticated ? (
+              <Link to="/Booking" className="btn btn-primary btn-lg" role="button">
+                Book Now
+              </Link>
+            ) : (
+              <span style={{ fontSize: '20px', color: 'black', backgroundcolor: '#ff9900' }}>
+                <Button
+               style={{
+                fontSize: '20px',
+                color: 'black',
+                padding: '2px 2px',
+                borderRadius: '5px',
+                fontWeight: 'bold',
+                border: '5px solid black', // Add this line to add a black border
+                }}
+                  onClick={() => loginWithRedirect()}
+                >
+                  Log In
+                </Button>
+              </span>
+            )}
+          </Button>
+
+
 
 
         </div>
       </div>
-    </div><div class="container py-4" style={styles}>
+    </div>
+    
+    <div class="container py-4" style={styles}>
       <h1 class="text-center">Our Services</h1>
       <h3 class="text-center1">We offer a variety of services to meet your pet's needs.</h3>
       <CardContainer sx={{ py: 1 }}><Marquee >
