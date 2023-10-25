@@ -504,21 +504,23 @@ var Booking = () => {
             >
               Submit
             </Button>
-            <Button
-                   style={{
-                    display: 'block',
-                    backgroundColor: '#4285F4',
-                    color: 'white',
-                    marginLeft: '8px',
-                    fontSize: 'lg',
-                    padding: '10px 20px',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                    width: '100%',
-                  }}
-                >
-                    <Link to='/Home'>Back</Link>
-                </Button>
+            <Link to="/home">
+  <button
+    style={{ marginLeft: '8px', marginTop: '10px',
+      backgroundColor: '#4285F4',
+      fontSize: 'lg',   /* Increase the font size */
+      padding: '10px 20px', /* Increase the padding for larger size */
+      borderRadius: '5px',  /* Add rounded corners */
+      color: '#fff',      /* Text color */
+      border: 'none',
+      width: '100%',     /* Remove the border */
+      cursor: 'pointer',  /* Show a pointer cursor on hover */
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' /* Add a subtle shadow */
+    }}
+  >
+    Back
+  </button>
+</Link>
             
           </form>
         </Box>

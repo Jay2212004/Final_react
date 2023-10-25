@@ -216,7 +216,7 @@ const Preview = ({ formData }) => {
     
           <div style={{ textAlign: 'center' }}>
             <button onClick={handlePayment}>Pay Now</button>
-            <button onClick={handleDownloadPDF}>Download PDF</button>
+            <button style={{marginTop:"8px"}} onClick={handleDownloadPDF}>Download PDF</button>
           </div></>
         
       </div>

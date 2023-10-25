@@ -9,7 +9,7 @@ body {
     padding: 10px;
     background-color: #eeac71; /* Set your preferred vibrant color here */
     color: #fff;
-    position: relative;
+    position: fixed;
     bottom: 0;
     width: 100%;
     opacity: 0.8; /* Add transparency to the footer */
@@ -20,6 +20,42 @@ body {
     color:white;
 
 }
+#services {
+    background-color: #eeac71; /* Background color for the section */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    text-decoration: none;
+  }
+  
+  #services h2 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; /* Text color for the title */
+  }
+  
+  #services ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  #services li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #666; /* Text color for the list items */
+  }
+  
+  #services li::before {
+    content: "•"; /* Use a bullet point as a list item marker */
+    color: #eeac71; /* Color of the bullet point */
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+    margin-right: 0.5em;
+    font-weight: bold;
+  }
+  
 
 /* AboutUs.css */
 /*  */

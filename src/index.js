@@ -12,7 +12,9 @@ import AboutUs from './components/AboutUs.jsx';
 import Navbar from './Backup/Navbar';
 import Booking from './components/Booking';
 import Profile from './components/Profile';
-
+import Grooming from './components/Grooming';
+import Boarding from './components/Boarding';
+import Daycare from './components/Daycare';
 import SignIn from './components/AdminPortal';
 import {Routes, Route,Redirect,BrowserRouter as Router} from "react-router-dom";
 import { FormDataProvider } from './components/FormDataContext';
@@ -35,6 +37,9 @@ root.render(
 <Route path="/Yourbookings" element={<Yourbookings/>}></Route>
 <Route path="/Booking" element={<Booking/>}></Route>
 <Route path="/Profile" element={<Profile/>}></Route>
+<Route path="/Daycare" element={<Daycare/>}></Route>
+<Route path="/Boarding" element={<Boarding/>}></Route>
+<Route path="/Grooming" element={<Grooming/>}></Route>
 
 <Route path="/Prereview" element={<Preview/>}></Route>
 <Route path="/AdminPortal" element={<SignIn/>}></Route>

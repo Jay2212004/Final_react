@@ -98,156 +98,6 @@ const Home = () => {
     }
   }
   return (<>
-        
-
-    {/* <AppBar position="static" sx={{ backgroundColor: '#FAAB78' }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            <Link to="/Home" style={{ textDecoration: 'none', color: 'white' }}>
-              <span style={{ fontSize: '18px', display: 'inline-block', paddingRight: '35px' }}>
-                PAWPRINT
-              </span>
-            </Link>
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Link to={`/${page}`} style={{ textDecoration: 'none' }}>
-                    {page}
-                  </Link>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            PAWPRINT
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Link key={page} to={`/${page}`} style={{ textDecoration: 'none' }}>
-          
-                <Button onClick={setShow} sx={{ my: 2, color: 'white', display: 'block' }} >
-                  {page}
-                </Button>
-                
-              </Link>
-            ))}
-          </Box>
-
-          <marquee style={{ color: 'white', fontSize: '1.2rem', fontStyle: 'italic', display: 'inline-block' }}>
-            Visiting hours: 10am to 5pm
-          </marquee>
-
-          {isAuthenticated ? (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open Menu">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  {user ? (
-                    <Avatar alt={user.name} src={user.picture} />
-                  ) : (
-                    <Avatar alt="Profile" />
-                  )}
-                </IconButton>
-              </Tooltip>
-
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    {setting === 'Profile' || setting === 'Yourbookings' ? (
-                      user ? (
-                        <Link to={`/${setting}`} style={{ textDecoration: 'none' }}>
-                          <Button>{setting}</Button>
-                        </Link>
-                      ) : (
-                        <Button>{setting}</Button>
-                      )
-                    ) : (
-                      <Button onClick={() => (setting === 'Logout' ? onLogout() : null)}>{setting}</Button>
-                    )}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          ) : null}
-        </Toolbar>
-      </Container>
-    </AppBar> */}
     <div>
       <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
@@ -302,8 +152,8 @@ const Home = () => {
           />
           <CardContent>
             <Typography gutterBottom variant="h4" component="div">
-              Daycare
-            </Typography><Link class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
+              <Link style={{textDecoration:'none'}} to="/Daycare">Daycare</Link>
+            </Typography><Link style={{textDecoration:'none'}} class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
             <Typography variant="body2" color="text.secondary">
               We provide a safe and fun environment for your pet to play and socialize with other pets while you are away.
             </Typography>
@@ -320,8 +170,8 @@ const Home = () => {
           />
           <CardContent>
             <Typography gutterBottom variant="h4" component="div">
-              Grooming
-            </Typography><Link class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
+            <Link style={{textDecoration:'none'}} to="/Grooming">Grooming</Link>
+            </Typography><Link style={{textDecoration:'none'}} class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
             <Typography variant="body2" color="text.secondary">
               We provide professional grooming services for your pet, including bathing, brushing, trimming, nail clipping, and more.
             </Typography>
@@ -338,8 +188,8 @@ const Home = () => {
           />
           <CardContent>
             <Typography gutterBottom variant="h4" component="div">
-              Boarding
-            </Typography><Link class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
+            <Link style={{textDecoration:'none'}} to="/Boarding">Boarding</Link>
+            </Typography><Link style={{textDecoration:'none'}} class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
             <Typography variant="body2" color="text.secondary">
               We offer comfortable and cozy accommodations for your pet to stay overnight or longer.
               We also provide daily walks and meals.
@@ -357,8 +207,8 @@ const Home = () => {
           />
           <CardContent>
             <Typography gutterBottom variant="h4" component="div">
-              Grooming
-            </Typography><Link class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
+            <Link style={{textDecoration:'none'}} to="/Grooming">Grooming</Link>
+            </Typography><Link style={{textDecoration:'none'}} class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
             <Typography variant="body2" color="text.secondary">
               We provide professional grooming services for your pet, including bathing, brushing, trimming, nail clipping, and more.
             </Typography>
@@ -727,12 +577,13 @@ const Home = () => {
       <div class="container text-center">
 
         <p>© 2023 PAWPRINT. All rights reserved.</p>
-        <p>Follow us on social media:</p>
-
+        <p>Follow us on social media:
+       
         <a href="https://www.instagram.com/jay_uchagaonkar/" class="text-white mx-2"><i class="fab fa-facebook-f"></i>@Jay</a>
         <a href="https://www.instagram.com/reallyaditishirke/" class="text-white mx-2"><i class="fab fa-twitter"></i>@Aditi</a>
         <a href="https://www.instagram.com/danielthatu/" class="text-white mx-2"><i class="fab fa-instagram"></i>@Daniel</a>
-        <a href="instagram.com/hey.vimal/" class="text-white mx-2"><i class="fab fa-instagram"></i>@Vimal</a>
+        <a href="instagram.com/hey.vimal/" class="text-white mx-2"><i class="fab fa-instagram"></i>@Vimal</a> <br></br>
+        You can reach out to us at:-<a id='1' href="mailto:pawsforyou23@gmail.com"style={{fontFamily:"cursive",color:"white"}}>pawsforyou23@gmail.com</a></p>
       </div>
     </footer></>
 

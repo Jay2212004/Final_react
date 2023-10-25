@@ -3,8 +3,8 @@ import { auth, provider } from './config';
 import { signInWithPopup } from 'firebase/auth';
 import './SignUp.css';
 import Home_Admin from './Home_Admin';
-
-const allowedEmails = ['uchagaonkar54jay@gmail.com']; // Add allowed email addresses
+import {Link} from 'react-router-dom'
+const allowedEmails = ['uchagaonkar54jay@student.sfit.ac.in']; // Add allowed email addresses
 
 const SignIn = () => {
   const [user, setUser] = useState(null);
@@ -35,9 +35,15 @@ const SignIn = () => {
 
   return (
     <div className="form-container">
-      <h1>Welcome To Admin Panel</h1>
-      {user ? <Home_Admin /> : <button onClick={handleSignIn}>Sign In With Google</button>}
+    <h1>Welcome To Admin Panel</h1>
+    {user ? <Home_Admin /> : <button onClick={handleSignIn}>Sign In With Google</button>}
+    <div style={{ marginTop: '10px' }}>
+      <Link to="/home">
+        <button>Back</button>
+      </Link>
     </div>
+  </div>
+  
   );
 };
 
