@@ -1,22 +1,23 @@
 import React from 'react';
+import "./AboutUs.css";
 
 const AboutUs = () => {
   return (
-    <div>
-      <header>
-        <h1>Welcome to PawPrint</h1>
-        <p>Your Trusted Partner for Pet Care</p>
-      </header>
+    <>
+      <div className='heading' style={{textAlign:'center'}}>
+        <h1 style={{fontSize:"3rem"}}>⋆˚🐾Welcome to PawPrint🐾˖°</h1>
+        <p style={{fontSize:"2rem"}}>Your Trusted Partner for Pet Care</p>
+      </div>
       
-      <main>
-        <section id="about">
-          <h2>About Us</h2>
-          <p>
+      <div>
+        <section id="about" style={{textAlign:'center'}}>
+          <h2 style={{fontSize:"2rem"}}>About Us</h2>
+          <h5 style={{fontSize:"1rem"}}>
             PawPrint is a dedicated pet care service provider that has been serving pet owners and their beloved animals for many years. We are passionate about providing the best possible care for your pets and ensuring their happiness and well-being.
-          </p>
+          </h5>
         </section>
         
-        <section id="services">
+        <div id="services">
           <h2>Our Services</h2>
           <ul>
             <li>Grooming</li>
@@ -26,13 +27,15 @@ const AboutUs = () => {
             <li>Boarding</li>
             <li>Vetenary Services</li>
           </ul>
-        </section>
-      </main>
+        </div>
+      </div>
       
-      <footer>
+      <footer className='afooter' style={{textAlign:'center'}}>
+      You can reach out to us at:-<a href="mailto:pawsforyou23@gmail.com"style={{fontFamily:"cursive"}}>pawsforyou23@gmail.com</a>
+
         <p>&copy; 2023 PawPrint</p>
       </footer>
-    </div>
+      </>
   );
 };
 

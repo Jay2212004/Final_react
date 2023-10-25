@@ -1,0 +1,26 @@
+body {
+    background-color: #f2e1ba;;
+
+    transition: background-color 0.3s ease;
+
+}
+.afooter{
+    text-align: center;
+    padding: 10px;
+    background-color: #eeac71; /* Set your preferred vibrant color here */
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    opacity: 0.8; /* Add transparency to the footer */
+    
+}
+.afooter a{
+    text-decoration: none;
+    color:white;
+
+}
+
+/* AboutUs.css */
+/*  */
+  

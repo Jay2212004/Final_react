@@ -4,7 +4,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { ref, get, onValue, child, getDatabase } from 'firebase/database';
 
-const YourBookings = () => {
+const YourBookings = ({userId}) => {
+  const [bookings,setBookings]=useState([]);
   const [showPreview, setShowPreview] = useState(false);
 
   const firebaseConfig = {
@@ -129,6 +130,16 @@ const YourBookings = () => {
       AddAllItemsToTable(users);
     });
   }
+  function fetchUserBookings(userId) {
+    const dbRef = ref(db, `users/${userId}/bookings`);
+    onValue(dbRef, (snapshot) => {
+      const userBookings = [];
+      snapshot.forEach((childSnapshot) => {
+        userBookings.push(childSnapshot.val());
+      });
+      setBookings(userBookings);
+    });
+  }
 
   function GetAllDataRealtime() {
     const dbRef = ref(db, "BookingDataRecords");
@@ -181,7 +192,12 @@ const YourBookings = () => {
                 <th>Feed</th>
               </tr>
             </thead>
-            <tbody id='tbody1'></tbody>
+            <tbody id='tbody1'>
+            {bookings.map((booking, index) => (
+                <tr key={index}>
+                  {/* ... Display booking details in each <td> ... */}
+                </tr>))}
+            </tbody>
           </table>
         </div>
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Booking.css';
 import Preview from './Prereview';
 import Checkbox from '@mui/material/Checkbox';
+import {Link} from 'react-router-dom';
 import {
   Container,
   Box,
@@ -185,7 +186,7 @@ var Booking = () => {
   dateOfEnd,
   specialRequirements,
       })
-      alert("Your services are booked succesfully,please complete the payment and also scroll to check the preview!!!!!\nYou'll get your payment receipt with the payment id after the payment is done.");
+      alert("Booking Preview Generated Below! Payment pending...");
     }
     else{
       alert("Please fill the data");
@@ -503,6 +504,22 @@ var Booking = () => {
             >
               Submit
             </Button>
+            <Button
+                   style={{
+                    display: 'block',
+                    backgroundColor: '#4285F4',
+                    color: 'white',
+                    marginLeft: '8px',
+                    fontSize: 'lg',
+                    padding: '10px 20px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    width: '100%',
+                  }}
+                >
+                    <Link to='/Home'>Back</Link>
+                </Button>
+            
           </form>
         </Box>
       </Container>

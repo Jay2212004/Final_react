@@ -20,7 +20,7 @@ const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
 );
 function App() {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-  return (
+  return (<>
     <Router>
       <Navbar isAuthenticated={isAuthenticated} />
       <Switch>
@@ -34,6 +34,18 @@ function App() {
         <Route path="/login" render={() => (isAuthenticated ? <Redirect to="/" /> : <Login />)} />
       </Switch>
     </Router>
+     <div className="App">
+     {adminPortalClicked ? (
+       // Render content when AdminPortal is clicked, without the Navbar
+       <AdminPortalContent />
+     ) : (
+       // Render content with the Navbar
+       <>
+         <Navbar hideNavbar={() => setAdminPortalClicked(true)} />
+         <MainContent />
+       </>
+     )}
+   </div></>
   );
 }
 

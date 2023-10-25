@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,11 +12,11 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-
+import './Navbar.css'
 import { useAuth0 } from "@auth0/auth0-react";
 import Cookies from 'js-cookie';
 
-const pages = ['Home', 'AboutUs']; // Define your pages
+const pages = ['Home', 'AboutUs', 'AdminPortal']; // Add 'AdminPortal' to the pages array
 const settings = ['Profile', 'Yourbookings', 'Logout']; // Define your settings
 
 function Navbar() {
@@ -24,9 +24,6 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
-  // Check if the cookie exists
-  const isAuth0UserCookieSet = !!Cookies.get('auth0_user_id');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -44,10 +41,8 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  // Log out the user and remove the cookie
   const onLogout = () => {
     Cookies.remove('auth0_user_id');
-    // Perform the logout action (e.g., calling Auth0's logout method)
     logout();
   };
 
@@ -70,13 +65,11 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-             
-             <Link to="/Home" style={{ textDecoration: 'none', color: 'white' }}>
-  <span style={{ fontSize: '18px',display:'inline-block',paddingRight:'35px' }}>
-    PAWPRINT
-  </span>
-</Link>
-
+            <Link  to="/Home" style={{ textDecoration: 'none', color: 'white' }}>
+              <span style={{ fontSize: '18px', display: 'inline-block', paddingRight: '50px' }}>
+                PAWPRINT
+              </span>
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -116,7 +109,6 @@ function Navbar() {
                 </MenuItem>
               ))}
             </Menu>
-            
           </Box>
 
           <Typography
@@ -137,7 +129,7 @@ function Navbar() {
           >
             PAWPRINT
           </Typography>
-              
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Link key={page} to={`/${page}`} style={{ textDecoration: 'none' }}>
@@ -147,86 +139,57 @@ function Navbar() {
               </Link>
             ))}
           </Box>
-          {/* {isAuthenticated ? (
-  <Link to="/Yourbookings" style={{ textDecoration: 'none' }}>
-    <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-      Yourbookings
-    </Button>
-  </Link>
-// ) : null} */}
-<marquee style={{ color: 'white', fontSize: '1.2rem', fontStyle: 'italic',display:'inline-block' }}>
- Visiting hours:-10am to 5pm
- </marquee>
 
-          {/* {isAuthenticated ? (
-            <div>
-             
-            </div>
-          ) : (
-            <Button 
-  style={{
-    fontSize: '15px',
-     // Change the background color to your preference
-    color: 'white', // Change the text color to your preference
-    padding: '2px 2px', // Adjust the padding to your preference
-    borderRadius: '5px' // Add rounded corners for a better look
-  }} 
-  onClick={() => loginWithRedirect()}
->
-  Log In
-</Button> */}
+          <marquee style={{ color: 'white', fontSize: '1.2rem', fontStyle: 'italic', display: 'inline-block' }}>
+            Visiting hours: 10am to 5pm
+          </marquee>
 
-          
+          {isAuthenticated ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open Menu">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  {user ? (
+                    <Avatar alt={user.name} src={user.picture} />
+                  ) : (
+                    <Avatar alt="Profile" />
+                  )}
+                </IconButton>
+              </Tooltip>
 
-{isAuthenticated ? (
-  <Box sx={{ flexGrow: 0 }}>
-    <Tooltip title="Open Menu">
-      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-        {user ? (
-          <Avatar alt={user.name} src={user.picture} />
-        ) : (
-          <Avatar alt="Profile" />
-        )}
-      </IconButton>
-    </Tooltip>
-    
-    <Menu
-      sx={{ mt: '45px' }}
-      id="menu-appbar"
-      anchorEl={anchorElUser}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={Boolean(anchorElUser)}
-      onClose={handleCloseUserMenu}
-    >
-      {settings.map((setting) => (
-  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-    {setting === 'Profile' || setting === 'Yourbookings' ? (
-      user ? (
-        <Link to={`/${setting}`} style={{ textDecoration: 'none' }}>
-          <Button>{setting}</Button>
-        </Link>
-      ) : (
-        <Button>{setting}</Button>
-      )
-    ) : (
-      <Button onClick={() => (setting === 'Logout' ? logout() : null)}>{setting}</Button>
-    )}
-  </MenuItem>
-  
-))}
-
-    </Menu>
-  </Box>
-) : null}
-
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    {setting === 'Profile' || setting === 'Yourbookings' ? (
+                      user ? (
+                        <Link to={`/${setting}`} style={{ textDecoration: 'none' }}>
+                          <Button>{setting}</Button>
+                        </Link>
+                      ) : (
+                        <Button>{setting}</Button>
+                      )
+                    ) : (
+                      <Button onClick={() => (setting === 'Logout' ? onLogout() : null)}>{setting}</Button>
+                    )}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          ) : null}
         </Toolbar>
       </Container>
     </AppBar>

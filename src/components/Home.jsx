@@ -26,12 +26,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CardMedia from '@mui/material/CardMedia';
 import Marquee from 'react-fast-marquee';
-import { Link } from 'react-router-dom';
 import './Home.css';
 import { FormLabel } from '@chakra-ui/react';
+import Cookies from 'js-cookie';
+import { Link,Navigate } from 'react-router-dom';
+const pages = ['Home', 'AboutUs', 'AdminPortal']; // Add 'AdminPortal' to the pages array
+const settings = ['Profile', 'Yourbookings', 'Logout']; // Define your settings
 
-// const pages = ['Home', 'AboutUs', 'Mybookings']; // Define your pages
-// const settings = ['Profile','Logout']; // Define your settings
 
 
 const styles = {
@@ -83,14 +84,175 @@ const Home = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  
+  const onLogout = () => {
+    Cookies.remove('auth0_user_id');
+    logout();
+  };
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const [show, setShow] = useState(false)
+  const ShowName = () => {
+    if (show == true) {
+      setShow(false)
+    } else {
+      setShow(true)
+    }
+  }
   return (<>
+        
+
+    {/* <AppBar position="static" sx={{ backgroundColor: '#FAAB78' }}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component={Link}
+            to="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            <Link to="/Home" style={{ textDecoration: 'none', color: 'white' }}>
+              <span style={{ fontSize: '18px', display: 'inline-block', paddingRight: '35px' }}>
+                PAWPRINT
+              </span>
+            </Link>
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Link to={`/${page}`} style={{ textDecoration: 'none' }}>
+                    {page}
+                  </Link>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          <Typography
+            variant="h5"
+            noWrap
+            component={Link}
+            to="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            PAWPRINT
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Link key={page} to={`/${page}`} style={{ textDecoration: 'none' }}>
+          
+                <Button onClick={setShow} sx={{ my: 2, color: 'white', display: 'block' }} >
+                  {page}
+                </Button>
+                
+              </Link>
+            ))}
+          </Box>
+
+          <marquee style={{ color: 'white', fontSize: '1.2rem', fontStyle: 'italic', display: 'inline-block' }}>
+            Visiting hours: 10am to 5pm
+          </marquee>
+
+          {isAuthenticated ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open Menu">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  {user ? (
+                    <Avatar alt={user.name} src={user.picture} />
+                  ) : (
+                    <Avatar alt="Profile" />
+                  )}
+                </IconButton>
+              </Tooltip>
+
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    {setting === 'Profile' || setting === 'Yourbookings' ? (
+                      user ? (
+                        <Link to={`/${setting}`} style={{ textDecoration: 'none' }}>
+                          <Button>{setting}</Button>
+                        </Link>
+                      ) : (
+                        <Button>{setting}</Button>
+                      )
+                    ) : (
+                      <Button onClick={() => (setting === 'Logout' ? onLogout() : null)}>{setting}</Button>
+                    )}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          ) : null}
+        </Toolbar>
+      </Container>
+    </AppBar> */}
     <div>
       <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
-          <h1 class="display-4">WELCOME TO PAWPRINT</h1>
-          <p style={{ fontWeight: 'bold'}}class="lead">The best pet daycare and grooming service in town.</p>
+          <h1 class="display-4">🐾WELCOME TO PAWPRINT🐾</h1>
+          <p style={{ fontWeight: 'bold' }} class="lead">The best pet daycare and grooming service in town.</p>
           <Button>
             {isAuthenticated ? (
               <Link to="/Booking" className="btn btn-primary btn-lg" role="button">
@@ -99,14 +261,15 @@ const Home = () => {
             ) : (
               <span style={{ fontSize: '20px', color: 'black', backgroundcolor: '#ff9900' }}>
                 <Button
-               style={{
-                fontSize: '20px',
-                color: 'black',
-                padding: '2px 2px',
-                borderRadius: '5px',
-                fontWeight: 'bold',
-                border: '5px solid black', // Add this line to add a black border
-                }}
+                  style={{
+                    fontSize: '20px',
+                    color: 'black',
+                    padding: '15px',
+                    borderRadius: '5px',
+                    fontWeight: 'bold',
+
+                    backgroundColor: '#edc566'
+                  }}
                   onClick={() => loginWithRedirect()}
                 >
                   Log In
@@ -121,12 +284,14 @@ const Home = () => {
         </div>
       </div>
     </div>
-    
+
+ 
+
     <div class="container py-4" style={styles}>
       <h1 class="text-center">Our Services</h1>
       <h3 class="text-center1">We offer a variety of services to meet your pet's needs.</h3>
       <CardContainer sx={{ py: 1 }}><Marquee >
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, marginRight: '25px' }}>
           <CardMedia
 
             component="img" // Specifies that the media is an image
@@ -145,7 +310,7 @@ const Home = () => {
           </CardContent>
 
         </Card>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, marginRight: '25px' }}>
           <CardMedia
             component="img" // Specifies that the media is an image
             alt="Grooming"
@@ -163,7 +328,7 @@ const Home = () => {
           </CardContent>
 
         </Card>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, marginRight: '25px' }}>
           <CardMedia
             component="img" // Specifies that the media is an image
             alt="Boarding"
@@ -181,15 +346,34 @@ const Home = () => {
             </Typography>
           </CardContent>
 
-        </Card></Marquee></CardContainer></div>
-        
-        
-        
-        
-     <Typography
-     style={{ backgroundColor: '#E8F3D6', color: 'black', fontSize: '2rem', textAlign: 'center' }}>Review Section</Typography>
+        </Card>
+        <Card sx={{ maxWidth: 345, marginRight: '25px' }}>
+          <CardMedia
+            component="img" // Specifies that the media is an image
+            alt="Grooming"
+            height="250" // Specify the height of the image
+            image="https://media.istockphoto.com/id/1393558296/photo/dog-taking-bath-at-home-n.jpg?s=612x612&w=0&k=20&c=PZD3P1wHTkUN7AJifSoFqGuyYOgs1bDkVE45j7rLPR4=" // Replace with the actual path to your image
+            title="Grooming"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h4" component="div">
+              Grooming
+            </Typography><Link class="btn btn-primary btn-lg" to="/Booking" role="button">Book Now</Link>
+            <Typography variant="body2" color="text.secondary">
+              We provide professional grooming services for your pet, including bathing, brushing, trimming, nail clipping, and more.
+            </Typography>
+          </CardContent>
+
+        </Card>
+      </Marquee></CardContainer></div>
+
+
+
+
+    <Typography
+      style={{ backgroundColor: '#E8F3D6', color: 'black', fontSize: '2rem', textAlign: 'center' }}>Review Section</Typography>
     <CardContainer sx={{ py: 1 }} >
-      
+
       {[1].map((cardIndex) => (
         <Card key={cardIndex} sx={{ maxWidth: 345 }}>
           <CardHeader
@@ -550,8 +734,8 @@ const Home = () => {
         <a href="https://www.instagram.com/danielthatu/" class="text-white mx-2"><i class="fab fa-instagram"></i>@Daniel</a>
         <a href="instagram.com/hey.vimal/" class="text-white mx-2"><i class="fab fa-instagram"></i>@Vimal</a>
       </div>
-    </footer>
-  </>
+    </footer></>
+
   )
 }
 
