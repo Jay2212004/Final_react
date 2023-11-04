@@ -4,19 +4,27 @@
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     margin: 20px;
-    text-align: center;
+    display: block
+    
   }
   
-  .service-container h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-  }
   
-  .service-container p {
+  
+  /* .service-container p {
     font-size: 16px;
     color: #666;
-  }
+  } */
   
   /* You can add more specific styles as needed for your design */
+/* .service-container ul{
+  list-style-type: circle;
+  list-style-position: inherit;
+} */
+.service-container.bath{
+display: inline-block;
+margin: 50px;
+}
+.service-container.bath.hair{
+  display: inline-block;
+}
   

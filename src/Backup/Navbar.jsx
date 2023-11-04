@@ -35,15 +35,18 @@ function Navbar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    window.location.reload();
   };
 
   const onLogout = () => {
     Cookies.remove('auth0_user_id');
     logout();
+    
   };
 
   return (
